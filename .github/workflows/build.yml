@@ -16,9 +16,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 360
-    env:
-      CCACHE_DIR: ${{ runner.temp }}/ccache
-      PACMAN_CACHE: ${{ runner.temp }}/pacman-cache
     steps:
       - uses: actions/checkout@v4
 
@@ -39,6 +36,8 @@ jobs:
       - name: Build in Arch container
         run: |
           set -euo pipefail
+          CCACHE_DIR="$RUNNER_TEMP/ccache"
+          PACMAN_CACHE="$RUNNER_TEMP/pacman-cache"
           mkdir -p "$CCACHE_DIR" "$PACMAN_CACHE"
           chmod 0777 "$CCACHE_DIR" "$PACMAN_CACHE"
           docker run --rm \
