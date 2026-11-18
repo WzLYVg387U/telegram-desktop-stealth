@@ -1,0 +1,21 @@
+Suppress outbound activity-status notifications.
+
+Make Api::SendProgressManager::send() a no-op so the client never sends
+messages.setTyping actions: typing, recording, uploads, sticker/location/
+contact selection, game play and group-call speaking.
+
+Read receipts, online status, message content and receiving-side
+behaviour are intentionally unchanged.
+
+diff --git a/Telegram/SourceFiles/api/api_send_progress.cpp b/Telegram/SourceFiles/api/api_send_progress.cpp
+--- a/Telegram/SourceFiles/api/api_send_progress.cpp
++++ b/Telegram/SourceFiles/api/api_send_progress.cpp
+@@ -109,6 +109,8 @@
+ }
+
+ void SendProgressManager::send(const Key &key, int progress) {
++	// Patched: never broadcast local activity status to the peer.
++	return;
+ 	if (skipRequest(key)) {
+ 		return;
+ 	}
