@@ -91,7 +91,9 @@ optdepends=(
   'webkitgtk-6.0: embedded browser features provided by webkitgtk-6.0 (gtk4)'
   'xdg-desktop-portal: desktop integration'
 )
-options=(!debug)
+# LTO is disabled because the final LTO link is killed by the OOM killer
+# on a GitHub-hosted runner (16 GB RAM).
+options=(!debug !lto)
 source=(
   "https://github.com/telegramdesktop/tdesktop/releases/download/v${pkgver}/tdesktop-${pkgver}-full.tar.gz"
   "git+https://github.com/tdlib/td.git#commit=${_td_commit}"

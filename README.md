@@ -48,6 +48,10 @@ GitHub Actions builds the package in an `archlinux:base-devel` container. The
 resulting `*.pkg.tar.zst` is uploaded as a workflow artifact. No build is run
 on the local machine.
 
+LTO is disabled in the PKGBUILD because the final LTO link exceeds the memory
+available on a GitHub-hosted runner. This affects optimisation only, not
+behaviour.
+
 ## Install
 
 ```bash
