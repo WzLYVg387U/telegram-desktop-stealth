@@ -34,13 +34,17 @@ from other users are unchanged.
 The packaging is based on the version published in the Arch Linux `extra`
 repository, not on the packaging repository's `main` branch:
 
-- current base: `telegram-desktop 7.4.4-1`
-- tag: `7.4.4-1` (`9f261153cb1d`)
+- current base: `telegram-desktop 7.4.4-2`
+- tag: `7.4.4-2` (`35e8bec68d6b`)
 
-When Arch moves to a new `pkgver` or bumps `pkgrel` for a rebuild, update this
-package to the same tag. `pkgrel` matters because Arch uses it when relinking
-against new library sonames. This package links the same shared libraries as
-the official package, so it must be rebuilt whenever those sonames change.
+Arch bumps `pkgrel` without changing `pkgver` when it rebuilds a package
+against a new library ABI; `7.4.4-2` is such a rebuild for libjxl 0.13.
+Follow those rebuilds as well as new upstream versions.
+
+This package pins the libjxl ABI with `libjxl.so=0.13-64` and
+`libjxl_threads.so=0.13-64`. When libjxl bumps its soname, pacman reports an
+unsatisfied dependency instead of letting the upgrade break Telegram at
+runtime; rebuild this package against the new soname then.
 
 ## Build
 
@@ -55,7 +59,7 @@ behaviour.
 ## Install
 
 ```bash
-sudo pacman -U telegram-desktop-stealth-7.4.4-1-x86_64.pkg.tar.zst
+sudo pacman -U telegram-desktop-stealth-7.4.4-2-x86_64.pkg.tar.zst
 ```
 
 The package declares `provides=('telegram-desktop')` and

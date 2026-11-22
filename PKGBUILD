@@ -1,5 +1,5 @@
-# Based on Arch Linux extra telegram-desktop 7.4.4-1:
-# https://gitlab.archlinux.org/archlinux/packaging/packages/telegram-desktop/-/tags/7.4.4-1
+# Based on Arch Linux extra telegram-desktop 7.4.4-2:
+# https://gitlab.archlinux.org/archlinux/packaging/packages/telegram-desktop/-/tags/7.4.4-2
 #
 # Original packaging by Sven-Hendrik Haase <svenstaro@archlinux.org>
 # and contributors as listed upstream.
@@ -10,7 +10,7 @@ pkgname=telegram-desktop-stealth
 pkgver=7.4.4
 _td_commit=c15d3f5a5de6e3ba5839822c451152e5e18bb700
 _wallet_engine_ver=0.0.7
-pkgrel=1
+pkgrel=2
 pkgdesc='Telegram Desktop client without outbound activity status'
 arch=('x86_64')
 url="https://desktop.telegram.org/"
@@ -34,6 +34,9 @@ depends=(
   'libheif'
   'libjpeg-turbo'
   'libjxl'
+  # Pin the libjxl ABI so a soname bump fails at pacman time, not at runtime.
+  'libjxl.so=0.13-64'
+  'libjxl_threads.so=0.13-64'
   'libpipewire'
   'libsrtp'
   'libstdc++'
